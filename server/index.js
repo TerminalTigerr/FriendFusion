@@ -8,6 +8,8 @@ import morgan from 'morgan'
 import helmet, { crossOriginResourcePolicy } from 'helmet'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import authRoutes from './routes/auth.js'
+import userRoutes from './routes/users.js'
 import { register } from './controllers/auth.js'
 
 
@@ -38,6 +40,10 @@ const storage = multer.diskStorage({
 const upload = multer({ storage })
 
 app.post("/auth/register", upload.single('picture'), register)
+
+// Routes
+app.use('/auth', authRoutes)
+app.use('/users', userRoutes)
 
 // mongoose setup
 const PORT = process.env.PORT || 6001
